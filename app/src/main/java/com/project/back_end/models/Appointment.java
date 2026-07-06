@@ -1,36 +1,82 @@
 package com.project.back_end.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "appointment")
 public class Appointment {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "doctor_id", nullable = false)
-    private Long doctorId;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
     
-    @Column(name = "patient_id", nullable = false)
-    private Long patientId;
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
     
+    @NotNull(message = "Appointment date is required")
+    @Future(message = "Appointment date must be in the future")
     @Column(name = "appointment_date", nullable = false)
     private LocalDateTime appointmentDate;
     
-    private String status;
-
+    @Column(nullable = false)
+    private String status = "CONFIRMED";
+    
+    // Constructors
     public Appointment() {}
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Long getDoctorId() { return doctorId; }
-    public void setDoctorId(Long doctorId) { this.doctorId = doctorId; }
-    public Long getPatientId() { return patientId; }
-    public void setPatientId(Long patientId) { this.patientId = patientId; }
-    public LocalDateTime getAppointmentDate() { return appointmentDate; }
-    public void setAppointmentDate(LocalDateTime appointmentDate) { this.appointmentDate = appointmentDate; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    
+    public Appointment(Doctor doctor, Patient patient, LocalDateTime appointmentDate) {
+        this.doctor = doctor;
+        this.patient = patient;
+        this.appointmentDate = appointmentDate;
+        this.status = "CONFIRMED";
+    }
+    
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public Doctor getDoctor() {
+        return doctor;
+    }
+    
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+    
+    public Patient getPatient() {
+        return patient;
+    }
+    
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+    
+    public LocalDateTime getAppointmentDate() {
+        return appointmentDate;
+    }
+    
+    public void setAppointmentDate(LocalDateTime appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

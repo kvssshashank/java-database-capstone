@@ -2,20 +2,25 @@ package com.project.back_end.controllers;
 
 import com.project.back_end.models.Doctor;
 import com.project.back_end.services.DoctorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctors")
 public class DoctorController {
-    private final DoctorService doctorService;
 
-    public DoctorController(DoctorService doctorService) {
-        this.doctorService = doctorService;
-    }
+    @Autowired
+    private DoctorService doctorService;
 
     @GetMapping
-    public List<Doctor> getAllDoctors() {
-        return doctorService.getAllDoctors();
+    public ResponseEntity<List<Doctor>> getAllDoctors() {
+        return ResponseEntity.ok(doctorService.getAllDoctors());
+    }
+
+    @PostMapping
+    public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doctor) {
+        return ResponseEntity.ok(doctorService.addDoctor(doctor));
     }
 }

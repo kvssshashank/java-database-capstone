@@ -2,19 +2,22 @@ package com.project.back_end.services;
 
 import com.project.back_end.models.Appointment;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class AppointmentService {
-    
-    public List<Appointment> getAppointmentsForDoctor(Long doctorId) {
-        // Logic to fetch appointments from database goes here
-        return new ArrayList<>();
+
+    public List<Appointment> getAllAppointments() {
+        return Collections.emptyList();
     }
-    
+
+    public List<Appointment> getAppointmentsForPatient(Long patientId) {
+        return Collections.emptyList();
+    }
+
     public Appointment bookAppointment(Appointment appointment) {
-        // Logic to save appointment goes here
+        appointment.setStatus("CONFIRMED");
         return appointment;
     }
 }

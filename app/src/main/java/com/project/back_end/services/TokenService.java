@@ -7,11 +7,13 @@ import java.util.UUID;
 public class TokenService {
 
     public String generateToken(String username) {
-        // Simple mock token generation
         return UUID.randomUUID().toString() + "-" + username;
     }
 
     public boolean validateToken(String token) {
-        return token != null && !token.isEmpty();
+        if (token == null || token.trim().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }
